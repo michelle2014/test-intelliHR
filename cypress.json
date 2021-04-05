@@ -1,0 +1,5 @@
+{
+    "baseUrl": "https://qa-tech-test-demo.uat.internihr.ninja",
+    "integrationFolder": "cypress/integration",
+    "chromeWebSecurity": false
+}
