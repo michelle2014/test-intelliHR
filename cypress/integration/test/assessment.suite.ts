@@ -1,6 +1,7 @@
 /// <reference types='cypress'/>
 /// <reference path="../../support/index.d.ts" />
 // @ts-check
+import { environment } from '../../environments'
 
 describe('intelliHR test suite', () => {   
     
@@ -65,10 +66,10 @@ describe('intelliHR test suite', () => {
         cy.url().should('include', '/auth/login')
 
         // Type username
-        cy.get('input[name="username"]').type('charlie')
+        cy.get('input[name="username"]').type(environment.Normal_User_username)
 
         // Type password
-        cy.get('input[name="password"]').type('fishactivitystrengthneedle')
+        cy.get('input[name="password"]').type(environment.Normal_User_password)
 
         // Find sign in button and click
         cy.get('button[type="submit"]').click()
@@ -122,10 +123,10 @@ describe('intelliHR test suite', () => {
         cy.visit('/auth/login')
 
         // Type username
-        cy.get('input[name="username"]').type('kenphil')
+        cy.get('input[name="username"]').type(environment.Manager_username)
 
         // Type password
-        cy.get('input[name="password"]').type('actvisitoredgetool')
+        cy.get('input[name="password"]').type(environment.Manager_password)
 
         // Find sign in button and click
         cy.get('button[type="submit"]').click()
@@ -164,10 +165,10 @@ describe('intelliHR test suite', () => {
 
         // Log in as a manager
         // Type username
-        cy.get('input[name="username"]').type('qaadmin')
+        cy.get('input[name="username"]').type(environment.Admin_username)
 
         // Type password
-        cy.get('input[name="password"]').type('lotworsetermeye')
+        cy.get('input[name="password"]').type(environment.Admin_password)
 
         // Find sign in button and click
         cy.get('button[type="submit"]').click()
@@ -179,7 +180,7 @@ describe('intelliHR test suite', () => {
         cy.contains('People').click()
 
         // Wait for 5 seconds
-        cy.wait(5000)
+        cy.wait(20000)
 
         // Click Export People to download
         cy.contains('Export People').click()

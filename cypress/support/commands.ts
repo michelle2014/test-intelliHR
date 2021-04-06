@@ -25,13 +25,15 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 // @ts-check
+import { environment } from '../environments'
+
 Cypress.Commands.add('login', () => {
 
     // Type username
-    cy.get('input[name="username"]').type('charlie')
+    cy.get('input[name="username"]').type(environment.Normal_User_username)
 
     // Type password
-    cy.get('input[name="password"]').type('fishactivitystrengthneedle')
+    cy.get('input[name="password"]').type(environment.Normal_User_password)
 
     // Find sign in button and click
     cy.get('button[type="submit"]').click()
