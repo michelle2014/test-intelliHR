@@ -176,12 +176,18 @@ describe('intelliHR test suite', () => {
         // Enter save to create a new skill
         cy.get('button').contains('Save').click()
         
-        // Search for new skill created and should see new skill name
-        // cy.get('input[name="filterControllerSearchInput"]').type('New Skill 1{enter}')
-        // cy.contains('New Skill 1')
+        // Search for new skill created and should see both skill names
+        // Check New Skill 1 first
+        cy.get('input[name="filterControllerSearchInput"]').type('New Skill 1{enter}')
+        cy.contains('New Skill 1')
+
+        // Clear input field
+        cy.get('input[name="filterControllerSearchInput"]').clear()
+
+        // Check New Skill 2 also exists
         cy.get('input[name="filterControllerSearchInput"]').type('New Skill 2{enter}')
         cy.contains('New Skill 2')
-    
+        
         // Select the kebab menu of the second skill
         cy.get('.fa-ellipsis-v').click()
 
@@ -192,6 +198,19 @@ describe('intelliHR test suite', () => {
         
         // Confirm delete
         cy.get('.alert').click()
+
+        // Clear input field
+        cy.get('input[name="filterControllerSearchInput"]').clear()
+
+        // Check only New Skill 1 exists
+        cy.get('input[name="filterControllerSearchInput"]').type('New Skill 1{enter}')
+        cy.contains('New Skill 1')
+
+        // Clear input field
+        cy.get('input[name="filterControllerSearchInput"]').clear()
+       
+        // Check New Skill 2 not exists
+        cy.get('span').contains('New Skill 2').should('not.exist')
     })
 
 
