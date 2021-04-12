@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test-intelliHR": "cypress run --headless --browser chrome --spec 'cypress/integration/test/assessment.suite.ts'"
+    "test-intelliHR": "cypress open"
   },
   "author": "michelle",
   "license": "ISC",

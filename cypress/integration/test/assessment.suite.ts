@@ -1,5 +1,8 @@
 /// <reference types='cypress'/>
 /// <reference path="../../support/index.d.ts" />
+import {
+    deleteDownloadsFolder, validateCsvFile, 
+} from './utils'
 // @ts-check
 import { environment } from '../../environments'
 
@@ -78,7 +81,7 @@ describe('intelliHR test suite', () => {
         cy.url().should('include', '/dashboard')
 
         // Verify that h1 containing greeting is visible, html doesn't come with a h1 tag, so only the text is verified with the div
-        cy.get('.header-greeting').should('have.text', 'Good evening, Charlie')
+        cy.get('.header-greeting').contains(/^Good \w+, Charlie/)
     })
 
 
@@ -91,9 +94,7 @@ describe('intelliHR test suite', () => {
         // Log out
         cy.get('a[href="https://qa-tech-test-demo.uat.internihr.ninja/auth/logout"]')
         
-        cy.wait(10000)
     })
-
 
 
     // User Story #6
@@ -138,7 +139,7 @@ describe('intelliHR test suite', () => {
         cy.contains('My Profile').click()
 
          // Wait for 5 seconds
-         cy.wait(10000)
+         cy.wait(5000)
 
         // Find Job tab and click
         cy.get('a[href="/spa/people/18a58789-556f-42f1-90f5-4df2e01bdc10/jobs"]').click()
@@ -154,41 +155,4 @@ describe('intelliHR test suite', () => {
     })
 
 
-    // User Story #9
-    // No Direct Reports under Ken Phil
-
-    // User Story #10
-    it('Admin click on "Export People" button, download a csv file and saved it into downloads folder', () => {
-        
-        // Visit <tenant>/auth/login, it is actually not successfuly redirected, so the baseUrl is used
-        cy.visit('/auth/login')
-
-        // Log in as a manager
-        // Type username
-        cy.get('input[name="username"]').type(environment.Admin_username)
-
-        // Type password
-        cy.get('input[name="password"]').type(environment.Admin_password)
-
-        // Find sign in button and click
-        cy.get('button[type="submit"]').click()
-
-        // Set viewport to 550px x 750px
-        cy.viewport(1366, 1024) 
-
-        // Click People
-        cy.contains('People').click()
-
-        // Wait for 5 seconds
-        cy.wait(20000)
-
-        // Click Export People to download
-        cy.contains('Export People').click()
-
-        // Wait for 5 seconds
-        cy.wait(5000)
-
-        // Verify csv downloaded exists
-        cy.readFile('../intelliHR/cypress/downloads/people-export-qa_tech_test_demo-2021[0-9]*.csv')
-    })
 })
