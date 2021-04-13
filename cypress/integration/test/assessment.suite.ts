@@ -249,7 +249,7 @@ describe('intelliHR test suite', () => {
         // Find sign in button and click
         cy.get('button[type="submit"]').click()
 
-        // Set viewport to 550px x 750px
+        // Set viewport to 1366px x 1024px
         cy.viewport(1366, 1024) 
 
         // Click My Profile
@@ -271,9 +271,90 @@ describe('intelliHR test suite', () => {
         cy.contains('Base Annual Salary')
     })
 
+    // User Story #8
+    // test@example.com needs to be added to admin email address first
+    it('Admin edits the second email', () => {
 
-    // User Story #9
-    // No Direct Reports under Ken Phil
+        // Visit <tenant>/auth/login
+        cy.visit('/auth/login')
+
+        // Log in as an admin
+        // Type username
+        cy.get('input[name="username"]').type(environment.Admin_username)
+
+        // Type password
+        cy.get('input[name="password"]').type(environment.Admin_password)
+
+        // Find sign in button and click
+        cy.get('button[type="submit"]').click()
+
+        // Set viewport to 1366px x 1024px
+        cy.viewport(1366, 1024)
+
+        // Click My Profile
+        cy.contains('My Profile').click()
+
+        // Wait for 6 seconds for the DOM to load
+        cy.wait(6000)
+
+        // Should see my profile page
+        cy.contains('Personal Information')
+
+        // Scroll down to Email Address
+        cy.contains('Email Address').scrollIntoView().should('be.visible')
+
+        // Change Email type
+        // Get email tag text length
+        cy.get('a[href="mailto:test@example.com"]')
+          .siblings().invoke('text').then((text) => {
+
+                // If length > 5, email tag text is personal, thus Personal Email Address is chosen
+                if (text.length > 5) {
+
+                    // Click the kebab button on the second email entry
+                    cy.get('.fa-ellipsis-v').eq(1).click()
+
+                    // Should see Edit and Delete and select Edit
+                    cy.contains('Delete')
+                    cy.contains('Edit').click()
+
+                    // Change to Work Email Address
+                    cy.contains('Work Email Address').parent().click()
+
+                    // Press Save button
+                    cy.contains('Save').click()
+
+                    // Return to the profile page
+                    cy.contains('Personal Information')
+
+                    // Verify the second email entry has the correct tag
+                    cy.get('a[href="mailto:test@example.com"]').parent().contains("Work")
+                
+                // If length < 5, email tag text is work, thus Work Email Address is chosen
+                } else {
+
+                    // Click the kebab button on the second email entry
+                    cy.get('.fa-ellipsis-v').eq(1).click()
+
+                    // Select Edit
+                    cy.contains('Edit').click()
+
+                    // Change to Personal Email Address
+                    cy.contains('Personal Email Address').parent().click()
+
+                    // Press Save button
+                    cy.contains('Save').click()
+
+                    // Return to the profile page
+                    cy.contains('Personal Information')
+
+                    // Verify the second email entry has the correct tag
+                    cy.get('a[href="mailto:test@example.com"]').parent().contains("Personal")
+                }
+            })
+    })
+
+    
 
     // User Story #10
     // Configure downloads folder
@@ -298,7 +379,7 @@ describe('intelliHR test suite', () => {
             // Find sign in button and click
             cy.get('button[type="submit"]').click()
 
-            // Set viewport to 550px x 750px
+            // Set viewport to 1366px x 1024px
             cy.viewport(1366, 1024) 
 
             // Click People
