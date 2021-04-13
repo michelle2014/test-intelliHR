@@ -354,7 +354,40 @@ describe('intelliHR test suite', () => {
             })
     })
 
-    
+    // User Story #9
+    it('Manager sees Direct Reports under Reporting section', () => {
+        
+        // Visit <User>/spa/people/<User id>
+        cy.visit('/spa/people')
+
+        // Type username
+        cy.get('input[name="username"]').type(environment.Manager_username)
+
+        // Type password
+        cy.get('input[name="password"]').type(environment.Manager_password)
+
+        // Find sign in button and click
+        cy.get('button[type="submit"]').click()
+
+        // Set viewport to 1366px x 1024px
+        cy.viewport(1366, 1024) 
+
+        // Wait for 5 seconds
+        cy.wait(5000)
+        
+        // Click My Profile
+        cy.contains('My Profile').click()
+
+        // Find Job tab and click
+        cy.get('a[href="/spa/people/18a58789-556f-42f1-90f5-4df2e01bdc10/jobs"]').click()
+
+        // Should see "Reporting" section
+        cy.contains('Reporting')
+
+        // <User> under "Direct Reports"
+        // No Direct Reports under Ken Phil
+        cy.contains('Direct Reports').parents().contains('No Direct Reports')
+    })
 
     // User Story #10
     // Configure downloads folder
