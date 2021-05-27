@@ -224,7 +224,7 @@ describe('intelliHR test suite', () => {
         cy.url().should('include', '/auth/login')
 
         // Normal user login
-        cy.login()
+        // cy.login()
 
         // Should see 'Page Not Found'
         cy.contains('Page Not Found')
@@ -402,7 +402,7 @@ describe('intelliHR test suite', () => {
             // Visit <tenant>/auth/login, it is actually not successfuly redirected, so the baseUrl is used
             cy.visit('/auth/login')
 
-            // Log in as a manager
+            // Log in as an admin
             // Type username
             cy.get('input[name="username"]').type(environment.Admin_username)
 
